@@ -2,7 +2,7 @@ var app = new Vue({
   el: '#app',
   data: {
     logs: [],
-    filteredLevel: null
+    filteredLevel: "all"
   },
   methods: {
     stack: function (text) {
@@ -44,10 +44,10 @@ var app = new Vue({
   },
   computed: {
     cLogs: function () {
-      if (!this.filteredLevel || this.filteredLevel === "") {
+      if (!this.filteredLevel || this.filteredLevel === "" || this.filteredLevel === "all") {
         return this.logs
       }
-      return this.logs.filter((l) => (l.l === this.filteredLevel))
+      return this.logs.filter((l) => (l.level === this.filteredLevel))
     }
   }
 })

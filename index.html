@@ -28,7 +28,17 @@
         <table class="table is-hoverable is-fullwidth" style="text-align: left;">
           <thead>
             <tr>
-              <th>Level</th>
+              <th>
+                <div class="select">
+                  <select v-model="filteredLevel">
+                    <option disabled value="all">Level</option>
+                    <option value="all">All</option>
+                    <option value="info">Info</option>
+                    <option value="warn">Warn</option>
+                    <option value="error">Error</option>
+                  </select>
+                </div>
+              </th>
               <th>Message</th>
               <th>Tags</th>
               <!-- <th>Stack</th> -->
@@ -39,10 +49,14 @@
               <th>
                 <span class="tag is-warning" v-if="l.level === 'warn'">Warn</span>
                 <span class="tag is-danger" v-else-if="l.level === 'error'">Error</span>
-                <span class="tag is-info" v-else>Info</span>
+                <span class="tag is-info" v-else>{{l.level}}</span>
               </th>
               <td v-bind:title="l.message">{{l.message.substring(0, 100)}}</td>
-              <td></td>
+              <td>
+                <div class="tags" v-if="l.tags">
+                  <span class="tag is-rounded has-background-primary-light" v-for="t in l.tags">{{t}}</span>
+                </div>
+              </td>
               <!-- <td v-html="stack(l.stack)"
                 style="text-align: left; font-size: 10px; overflow-x: auto; word-wrap: unset;"></td> -->
             </tr>
