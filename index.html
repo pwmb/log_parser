@@ -25,6 +25,7 @@
 
     <section class="section" style="text-align: center;">
       <div class="container">
+        <input class="input" type="text" placeholder="🔍   Search" style="margin-bottom: 1em;" v-model="filterSearch">
         <div class="tags">
           <div class="tag has-background-info-light is-rounded" v-for="t in filteredTags">
             {{t}}

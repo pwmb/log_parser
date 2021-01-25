@@ -3,7 +3,8 @@ var app = new Vue({
   data: {
     logs: [],
     filteredTags: [],
-    filteredLevel: "all"
+    filteredLevel: "all",
+    filterSearch: ""
   },
   methods: {
     stack: function (text) {
@@ -69,6 +70,12 @@ var app = new Vue({
               return l.tags.filter((t) => this.filteredTags.indexOf(t) !== -1).length > 0
             }
             return false
+          }
+          return true;
+        })
+        .filter((l) => {
+          if (this.filterSearch && this.filterSearch !== "") {
+            return l.message.toLowerCase().match(this.filterSearch.toLowerCase()) || (l.tags && l.tags.filter((t) => t.toLowerCase().match(this.filterSearch.toLowerCase())).length > 0)
           }
           return true;
         })
