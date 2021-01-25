@@ -2,6 +2,7 @@ var app = new Vue({
   el: '#app',
   data: {
     logs: [],
+    filteredTags: [],
     filteredLevel: "all"
   },
   methods: {
@@ -40,14 +41,37 @@ var app = new Vue({
       }
 
       fr.readAsText(file)
+    },
+    addToFilterTags: function (tag) {
+      if (this.filteredTags.indexOf(tag) === -1) {
+        this.filteredTags.push(tag);
+      }
+    },
+    removeFromFilterTags: function (tag) {
+      const i = this.filteredTags.indexOf(tag);
+      if (i !== -1) {
+        this.filteredTags.splice(i, 1)
+      }
     }
   },
   computed: {
     cLogs: function () {
-      if (!this.filteredLevel || this.filteredLevel === "" || this.filteredLevel === "all") {
-        return this.logs
-      }
-      return this.logs.filter((l) => (l.level === this.filteredLevel))
-    }
+      return this.logs
+        .filter((l) => {
+          if (!this.filteredLevel || this.filteredLevel === "" || this.filteredLevel === "all") {
+            return this.logs
+          }
+          return l.level === this.filteredLevel
+        })
+        .filter((l) => {
+          if (this.filteredTags.length > 0) {
+            if (l.tags && l.tags.length > 0) {
+              return l.tags.filter((t) => this.filteredTags.indexOf(t) !== -1).length > 0
+            }
+            return false
+          }
+          return true;
+        })
+    },
   }
 })

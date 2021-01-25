@@ -25,6 +25,12 @@
 
     <section class="section" style="text-align: center;">
       <div class="container">
+        <div class="tags">
+          <div class="tag has-background-info-light is-rounded" v-for="t in filteredTags">
+            {{t}}
+            <button class="delete" v-on:click="removeFromFilterTags(t)"></button>
+          </div>
+        </div>
         <table class="table is-hoverable is-fullwidth" style="text-align: left;">
           <thead>
             <tr>
@@ -54,7 +60,8 @@
               <td v-bind:title="l.message">{{l.message.substring(0, 100)}}</td>
               <td>
                 <div class="tags" v-if="l.tags">
-                  <span class="tag is-rounded has-background-primary-light" v-for="t in l.tags">{{t}}</span>
+                  <span class="tag is-rounded has-background-primary-light is-clickable" v-for="t in l.tags"
+                    v-on:click="addToFilterTags(t)">{{t}}</span>
                 </div>
               </td>
               <!-- <td v-html="stack(l.stack)"
